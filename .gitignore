@@ -1,0 +1,16 @@
+# The .vscode folder contains launch configuration and tasks configured
+.vscode
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache
+
+# Environments
+.env
+.venv
+
+# PDfs files
+*.pdf
+*.PDF
