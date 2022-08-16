@@ -11,9 +11,10 @@ layout = [
         sg.InputText(key='path', enable_events=True, readonly=True),
     ],
     [sg.Button('Buscar')],
+    [sg.Text('', key='saida')],
 ]
 
-window = sg.Window('Busca Busca nome em arquivos pdfs', layout)
+window = sg.Window('Busca Busca nome em arquivos pdfs', layout, element_justification='c')
 
 while True:
     event, values = window.read()
@@ -22,12 +23,14 @@ while True:
         break
 
     if event == 'Buscar':
+        message = ''
         has_name, page_number = has_name_in_file(values['candidato'], values['path'])
+
         if not has_name:
             message = 'Infelizmente seu nome não foi encontrado no documento.'
-            print(message)
         else:
             message = f'Opa! Seu nome foi encontrado na página {page_number} desse documento.'
-            print(message)
+
+        window['saida'].update(message)
 
 window.close()
