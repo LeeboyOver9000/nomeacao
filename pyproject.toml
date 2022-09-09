@@ -8,6 +8,9 @@ authors = ["Pedro Ivo <pedro.ivo.freire.aragao@gmail.com>"]
 python = "^3.10"
 PyPDF2 = "^2.10.0"
 PySimpleGUI = "^4.60.3"
+selenium = "^4.4.3"
+webdriver-manager = "^3.8.3"
+python-dotenv = "^0.21.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1"
