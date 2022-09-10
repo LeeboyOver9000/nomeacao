@@ -83,7 +83,7 @@ def rename_file(filename: str) -> str:
 def send_email(message: str) -> None:
     corpo_email = f"""
     <h1>Nomeação no Diário da Justíça</h1>
-    <p>{message}</p>
+    {message}
     """
 
     msg = email.message.Message()
@@ -119,15 +119,22 @@ names = [
 if __name__ == '__main__':
     load_dotenv(find_dotenv())
     download_file(BASE_URL, OUTPUT_DIR)
+
     pdfs = [file for file in os.listdir(OUTPUT_DIR) if file.endswith('.pdf')]
+
     for pdf in pdfs:
+        name_found = False
+        message = ''
+
         for name in names:
             has_name, page_number = has_name_in_file(name, pdf)
             filename = rename_file(pdf)
-            if not has_name:
-                file = Path(OUTPUT_DIR, filename)
-                os.remove(file)
-            else:
-                send_email(
-                    f'Opa! Encontramos o nome {name} no arquivo {filename} na página {page_number}'
-                )
+            if has_name:
+                name_found = True
+                message += f'<p>Opa! Encontramos o nome {name} no arquivo {filename} na página {page_number}</p>'
+
+        if not name_found:
+            file = Path(OUTPUT_DIR, filename)
+            os.remove(file)
+        else:
+            send_email(message)
