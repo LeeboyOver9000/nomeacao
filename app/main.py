@@ -1,6 +1,7 @@
 import email.message
 import os
 import smtplib
+import re
 from pathlib import Path
 from time import sleep
 from typing import Tuple
@@ -56,12 +57,14 @@ def normalize_name(name: str) -> str:
 def has_name_in_file(name: str, filename: str) -> Tuple[bool, int]:
     path = Path(OUTPUT_DIR, filename)
     reader = PdfReader(path)
-    name_normalized = normalize_name(name)
+    # name_normalized = normalize_name(name)
+    pattern = re.compile(name.strip(), re.IGNORECASE)
 
     current_page = 1
     for page in reader.pages:
         text = page.extract_text()
-        if name_normalized in text:
+        # if name_normalized in text:
+        if re.search(pattern, text):
             return True, current_page
         current_page += 1
 
@@ -100,19 +103,31 @@ def send_email(message: str) -> None:
 OUTPUT_DIR = Path(Path.home(), 'Downloads')
 BASE_URL = 'https://esaj.tjce.jus.br/cdje/index.do'
 
-username = 'Pedro Ivo Freire Aragão'
+names = [
+    'PEDRO IVO FREIRE ARAGAO',
+    'EWERTON ALMEIDA SILVA',
+    'WENDELL MILITAO FERNANDES MENDES',
+    'ANTONIO LUIS SOMBRA DE MEDEIROS',
+    'ABELARDO VIEIRA MOTA',
+    'FABIANO JOSE GADELHA DE FREITAS',
+    'LEANDRO HENRIQUE DE SOUZA SANTOS',
+    'DOUGLAS PEIXOTO RODRIGUES',
+    'ANTONIO GABRIEL DA SILVA FERNANDES',
+    'JOAO MARCOS CARVALHO LIMA'
+]
 
 if __name__ == '__main__':
     load_dotenv(find_dotenv())
     download_file(BASE_URL, OUTPUT_DIR)
     pdfs = [file for file in os.listdir(OUTPUT_DIR) if file.endswith('.pdf')]
     for pdf in pdfs:
-        has_name, page_number = has_name_in_file(username, pdf)
-        filename = rename_file(pdf)
-        if not has_name:
-            file = Path(OUTPUT_DIR, filename)
-            os.remove(file)
-        else:
-            send_email(
-                f'Opa! Encontramos o seu nome no arquivo {filename} na página {page_number}'
-            )
+        for name in names:
+            has_name, page_number = has_name_in_file(name, pdf)
+            filename = rename_file(pdf)
+            if not has_name:
+                file = Path(OUTPUT_DIR, filename)
+                os.remove(file)
+            else:
+                send_email(
+                    f'Opa! Encontramos o nome {name} no arquivo {filename} na página {page_number}'
+                )
