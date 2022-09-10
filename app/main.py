@@ -71,13 +71,12 @@ def has_name_in_file(name: str, filename: str) -> Tuple[bool, int]:
     return False, 0
 
 
-def rename_file(filename: str) -> str:
+def rename_file(filename: str) -> None:
     path = Path(OUTPUT_DIR, filename)
     old_name = path.stem.split('-')[0]
     today = datetime.strftime(datetime.now(), '%d-%m-%Y')
     new_name = f'{old_name}-{today}.pdf'
     path.rename(Path(path.parent, new_name))
-    return new_name
 
 
 def send_email(message: str) -> None:
@@ -100,7 +99,7 @@ def send_email(message: str) -> None:
     server.sendmail(msg['From'], [msg['To']], msg.as_string().encode('utf-8'))
 
 
-OUTPUT_DIR = Path(Path.home(), 'Downloads')
+OUTPUT_DIR = Path(Path.home(), 'Downloads', 'tjce')
 BASE_URL = 'https://esaj.tjce.jus.br/cdje/index.do'
 
 names = [
@@ -123,18 +122,19 @@ if __name__ == '__main__':
     pdfs = [file for file in os.listdir(OUTPUT_DIR) if file.endswith('.pdf')]
 
     for pdf in pdfs:
+        today = datetime.strftime(datetime.now(), '%d/%m/%Y')
         name_found = False
         message = ''
 
         for name in names:
             has_name, page_number = has_name_in_file(name, pdf)
-            filename = rename_file(pdf)
+
             if has_name:
                 name_found = True
-                message += f'<p>Opa! Encontramos o nome {name} no arquivo {filename} na página {page_number}</p>'
+                message += f'<p>Opa! Encontramos o nome {name}, no arquivo {pdf}, na página {page_number} e no dia {today}</p>'
 
-        if not name_found:
-            file = Path(OUTPUT_DIR, filename)
-            os.remove(file)
-        else:
+        if name_found:
             send_email(message)
+
+        file = Path(OUTPUT_DIR, pdf)
+        os.remove(file)
