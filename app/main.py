@@ -104,6 +104,7 @@ BASE_URL = 'https://esaj.tjce.jus.br/cdje/index.do'
 
 names = [
     'PEDRO IVO FREIRE ARAGAO',
+    'PEDRO IVO FREIRE ARAGÃO',
     'EWERTON ALMEIDA SILVA',
     'WENDELL MILITAO FERNANDES MENDES',
     'ANTONIO LUIS SOMBRA DE MEDEIROS',
