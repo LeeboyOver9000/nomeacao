@@ -51,19 +51,17 @@ def normalize_name(name: str) -> str:
     normalized = (
         normalize('NFKD', name).encode('ASCII', 'ignore').decode('ASCII')
     )
-    return normalized.strip().upper()
+    return normalized.strip()
 
 
 def has_name_in_file(name: str, filename: str) -> Tuple[bool, int]:
     path = Path(OUTPUT_DIR, filename)
     reader = PdfReader(path)
-    # name_normalized = normalize_name(name)
-    pattern = re.compile(name.strip(), re.IGNORECASE)
+    pattern = re.compile(normalize_name(name), re.IGNORECASE)
 
     current_page = 1
     for page in reader.pages:
         text = page.extract_text()
-        # if name_normalized in text:
         if re.search(pattern, text):
             return True, current_page
         current_page += 1
@@ -104,7 +102,6 @@ BASE_URL = 'https://esaj.tjce.jus.br/cdje/index.do'
 
 names = [
     'PEDRO IVO FREIRE ARAGAO',
-    'PEDRO IVO FREIRE ARAGÃO',
     'EWERTON ALMEIDA SILVA',
     'WENDELL MILITAO FERNANDES MENDES',
     'ANTONIO LUIS SOMBRA DE MEDEIROS',
@@ -120,10 +117,10 @@ if __name__ == '__main__':
     load_dotenv(find_dotenv())
     download_file(BASE_URL, OUTPUT_DIR)
 
+    today = datetime.strftime(datetime.now(), '%d/%m/%Y')
     pdfs = [file for file in os.listdir(OUTPUT_DIR) if file.endswith('.pdf')]
 
     for pdf in pdfs:
-        today = datetime.strftime(datetime.now(), '%d/%m/%Y')
         name_found = False
         message = ''
 
