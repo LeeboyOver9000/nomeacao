@@ -14,3 +14,11 @@ __pycache__/
 # PDfs files
 *.pdf
 *.PDF
+
+# Distribution / packaging
+build/
+dist/
+
+# PyInstaller
+*.manifest
+*.spec
