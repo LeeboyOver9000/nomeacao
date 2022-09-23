@@ -26,7 +26,7 @@ def normalize_name(name: str) -> str:
 
 def has_name_in_file(name: str, path: str) -> Tuple[bool, int]:
     reader = PdfReader(path)
-    pattern = re.compile(normalize_name(name), re.IGNORECASE)
+    pattern = re.compile(normalize_name(name), re.MULTILINE | re.IGNORECASE)
 
     current_page = 1
     for page in reader.pages:
