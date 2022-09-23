@@ -31,7 +31,7 @@ def has_name_in_file(name: str, path: str) -> Tuple[bool, int]:
     current_page = 1
     for page in reader.pages:
         text = page.extract_text()
-        if re.search(pattern, text):
+        if pattern.search(text):
             return True, current_page
         current_page += 1
 

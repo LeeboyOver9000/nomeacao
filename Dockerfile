@@ -1,7 +1,6 @@
 FROM python:3.10
 
-# Intall Poetry
-RUN pip install "poetry==1.1.13"
+RUN pip install "poetry==1.2.1"
 
 WORKDIR /code
 COPY poetry.lock pyproject.toml /code/
