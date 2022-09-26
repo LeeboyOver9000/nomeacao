@@ -40,7 +40,14 @@ def get_browser(url: str, path: Path = None) -> WebDriver:
 
 
 def download_file(url: str, path: Path = None) -> None:
-    browser = get_browser(url, path)
+    browser = None
+
+    while not browser:
+        try:
+            browser = get_browser(url, path)
+        except Exception:
+            browser = None
+
     sleep(3)
     browser.find_element(By.ID, 'download').click()
     sleep(15)
