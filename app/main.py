@@ -117,7 +117,10 @@ names = [
     'LEANDRO HENRIQUE DE SOUZA SANTOS',
     'DOUGLAS PEIXOTO RODRIGUES',
     'ANTONIO GABRIEL DA SILVA FERNANDES',
-    'JOAO MARCOS CARVALHO LIMA'
+    'JOAO MARCOS CARVALHO LIMA',
+    'CLEIRTON MONTE DE SOUSA',
+    'WANDEMBERG RODRIGUES GOMES',
+    'DANNIEL ALBUQUERQUE ARAUJO'
 ]
 
 if __name__ == '__main__':
@@ -130,16 +133,21 @@ if __name__ == '__main__':
     for pdf in pdfs:
         name_found = False
         message = ''
+        messageToEmail = ''
 
         for name in names:
             has_name, page_number = has_name_in_file(name, pdf)
 
             if has_name:
                 name_found = True
-                message += f'<p>Opa! Encontramos o nome {name}, no arquivo {pdf}, na página {page_number} e no dia {today}</p>'
+                message += f'Opa! O nome {name} foi encontrado no arquivo {pdf}, na página {page_number} e no dia {today}'
+                messageToEmail += f'<p>{message}</p>'
 
         if name_found:
-            send_email(message)
+            print(message)
+            send_email(messageToEmail)
+        else:
+            print(f'Infelizmente nenhum nome foi encontrado no arquivo {pdf}')
 
         file = Path(OUTPUT_DIR, pdf)
         os.remove(file)
