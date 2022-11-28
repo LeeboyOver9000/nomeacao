@@ -22,3 +22,6 @@ dist/
 # PyInstaller
 *.manifest
 *.spec
+
+# Web Driver Manager
+.wdm

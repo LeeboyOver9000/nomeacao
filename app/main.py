@@ -33,6 +33,8 @@ def get_browser(url: str, path: Path = None) -> WebDriver:
         prefs = {'download.default_directory': f'{path}'}
         options.add_experimental_option('prefs', prefs)
 
+    os.environ['WDM_LOCAL'] = '1'
+
     chrome_service = Service(ChromeDriverManager().install())
     browser = Chrome(service=chrome_service, options=options)
     browser.get(url)
