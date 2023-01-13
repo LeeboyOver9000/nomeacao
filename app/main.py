@@ -122,7 +122,13 @@ names = [
     'JOAO MARCOS CARVALHO LIMA',
     'CLEIRTON MONTE DE SOUSA',
     'WANDEMBERG RODRIGUES GOMES',
-    'DANNIEL ALBUQUERQUE ARAUJO'
+    'DANNIEL ALBUQUERQUE ARAUJO',
+    'PEDRO CRISPIM ALENCAR',
+    'LUCAS ALESSIO ANUNCIADO SILVA',
+    'JOSE FELIPE RIBEIRO ARAUJO',
+    'LEYBERSON PEREIRA ASSUNCAO',
+    'DAVI MENESES BESSA',
+    'CHRISTIANO MACHADO DA COSTA',
 ]
 
 if __name__ == '__main__':
@@ -142,7 +148,7 @@ if __name__ == '__main__':
 
             if has_name:
                 name_found = True
-                message += f'Opa! O nome {name} foi encontrado no arquivo {pdf}, na página {page_number} e no dia {today}'
+                message += f'Opa! O nome {name} foi encontrado no arquivo {pdf}, na página {page_number} e no dia {today}\n'
                 messageToEmail += f'<p>{message}</p>'
 
         if name_found:
