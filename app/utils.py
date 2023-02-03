@@ -17,6 +17,7 @@ from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 
+
 def normalize_name(name: str) -> str:
     normalized = (
         normalize('NFKD', name).encode('ASCII', 'ignore').decode('ASCII')
@@ -36,6 +37,7 @@ def has_name_in_file(name: str, path: str) -> Tuple[bool, int]:
         current_page += 1
 
     return False, 0
+
 
 def get_browser(url: str, path: Path = None) -> WebDriver:
     options = Options()
@@ -64,8 +66,13 @@ def download_file(url: str, path: Path = None) -> None:
     sleep(15)
     browser.quit()
 
+
 def rename_file(output_path: Path, filename: str = None) -> None:
-    path = Path(output_path, filename) if filename is not None else Path(output_path)
+    path = (
+        Path(output_path, filename)
+        if filename is not None
+        else Path(output_path)
+    )
     if path.is_file():
         old_name = path.stem.split('-')[0]
         today = datetime.strftime(datetime.now(), '%d-%m-%Y')

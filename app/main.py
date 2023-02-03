@@ -52,7 +52,7 @@ def download_file(url: str, path: Path = None) -> None:
 
     sleep(3)
     browser.find_element(By.ID, 'download').click()
-    sleep(15)
+    sleep(30)
     browser.quit()
 
 
@@ -148,12 +148,17 @@ if __name__ == '__main__':
 
             if has_name:
                 name_found = True
-                message += f'Opa! O nome {name} foi encontrado no arquivo {pdf}, na página {page_number} e no dia {today}\n'
-                messageToEmail += f'<p>{message}</p>'
+                message += f'O nome {name} foi encontrado no arquivo {pdf}, na página {page_number} e no dia {today}\n'
+                messageToEmail += f'<p>O nome {name} foi encontrado no arquivo {pdf}, na página {page_number} e no dia {today}</p>'
 
         if name_found:
             print(message)
-            send_email(messageToEmail)
+            try:
+                send_email(messageToEmail)
+            except Exception:
+                print(
+                    'Não foi possível enviar o e-mail, verifique se existe o arquivo .env e se SENHA_EMAIL está correto.'
+                )
         else:
             print(f'Infelizmente nenhum nome foi encontrado no arquivo {pdf}')
 
