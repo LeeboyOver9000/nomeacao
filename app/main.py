@@ -30,7 +30,11 @@ def get_browser(url: str, path: Path = None) -> WebDriver:
 
     if path:
         path.mkdir(exist_ok=True)
-        prefs = {'download.default_directory': f'{path}'}
+        prefs = {
+            "download.default_directory": str(path),
+            "download.prompt_for_download": False,
+            "safebrowsing.enabled": True,
+        }
         options.add_experimental_option('prefs', prefs)
 
     os.environ['WDM_LOCAL'] = '1'
@@ -106,7 +110,9 @@ def send_email(message: str) -> None:
     server.sendmail(msg['From'], [msg['To']], msg.as_string().encode('utf-8'))
 
 
-OUTPUT_DIR = Path(Path.home(), 'Downloads', 'tjce')
+# OUTPUT_DIR = Path(Path.home(), 'Downloads', 'tjce')
+# OUTPUT_DIR = Path() / 'files'
+OUTPUT_DIR = Path()
 BASE_URL = 'https://esaj.tjce.jus.br/cdje/index.do'
 
 names = [
@@ -157,7 +163,7 @@ if __name__ == '__main__':
                 send_email(messageToEmail)
             except Exception:
                 print(
-                    'Não foi possível enviar o e-mail, verifique se existe o arquivo .env e se SENHA_EMAIL está correto.'
+                    'Não foi possível enviar o e-mail, verifique se existe o arquivo .env e se SENHA_EMAIL está correta.'
                 )
         else:
             print(f'Infelizmente nenhum nome foi encontrado no arquivo {pdf}')
