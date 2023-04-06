@@ -31,9 +31,10 @@ def get_browser(url: str, path: Path = None) -> WebDriver:
     if path:
         path.mkdir(exist_ok=True)
         prefs = {
-            "download.default_directory": str(path),
-            "download.prompt_for_download": False,
-            "safebrowsing.enabled": True,
+            'download.default_directory': str(path),
+            'download.prompt_for_download': False,
+            'download.directory_upgrade': True,
+            'safebrowsing.enabled': True,
         }
         options.add_experimental_option('prefs', prefs)
 
@@ -117,24 +118,7 @@ BASE_URL = 'https://esaj.tjce.jus.br/cdje/index.do'
 
 names = [
     'PEDRO IVO FREIRE ARAGAO',
-    'EWERTON ALMEIDA SILVA',
-    'WENDELL MILITAO FERNANDES MENDES',
-    'ANTONIO LUIS SOMBRA DE MEDEIROS',
-    'ABELARDO VIEIRA MOTA',
-    'FABIANO JOSE GADELHA DE FREITAS',
-    'LEANDRO HENRIQUE DE SOUZA SANTOS',
-    'DOUGLAS PEIXOTO RODRIGUES',
-    'ANTONIO GABRIEL DA SILVA FERNANDES',
-    'JOAO MARCOS CARVALHO LIMA',
-    'CLEIRTON MONTE DE SOUSA',
-    'WANDEMBERG RODRIGUES GOMES',
     'DANNIEL ALBUQUERQUE ARAUJO',
-    'PEDRO CRISPIM ALENCAR',
-    'LUCAS ALESSIO ANUNCIADO SILVA',
-    'JOSE FELIPE RIBEIRO ARAUJO',
-    'LEYBERSON PEREIRA ASSUNCAO',
-    'DAVI MENESES BESSA',
-    'CHRISTIANO MACHADO DA COSTA',
 ]
 
 if __name__ == '__main__':
